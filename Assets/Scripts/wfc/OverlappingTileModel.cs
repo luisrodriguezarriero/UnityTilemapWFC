@@ -29,6 +29,17 @@ public class OverlappingTileModel  : Model
         tilemap.orientation = Tilemap.Orientation.XY;
         BoundsInt bounds = tilemap.cellBounds;
         TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
+        TileBase[] sample = new TileBase[allTiles.Length];
+        tiles = new List<TileBase>();
+        for (int i = 0; i < sample.Length; i++)
+        {
+            int color = allTiles[i];
+            int k = 0;
+            for (; k < colors.Count; k++) if (colors[k] == color) break;
+            if (k == colors.Count) colors.Add(color);
+            sample[i] = (byte)k;
+        }
+
         int SX = bounds.size.x, SY = bounds.size.y;
 
         int nTiles = tilemap.GetUsedTilesCount();
@@ -104,7 +115,7 @@ public class OverlappingTileModel  : Model
                 for (int x = 0; x < MX; x++)
                 {
                     int dx = x < MX - N + 1 ? 0 : N - 1;
-                    bitmap[x + y * MX] = tiles[patterns[observed[x - dx + (y - dy) * MX]][dx + dy * N]];
+                    bitmap[x + y * MX] = tiles[patternIndexes[observed[x - dx + (y - dy) * MX]][dx + dy * N]];
                 }
             }
         }
@@ -112,7 +123,8 @@ public class OverlappingTileModel  : Model
         {
             for (int i = 0; i < wave.Length; i++)
             {
-                int contributors = 0, r = 0, g = 0, b = 0;
+                int contributors = 0;
+                TileBase result;
                 int x = i % MX, y = i / MX;
                 for (int dy = 0; dy < N; dy++) for (int dx = 0; dx < N; dx++)
                     {
@@ -127,16 +139,13 @@ public class OverlappingTileModel  : Model
                         for (int t = 0; t < T; t++) if (wave[s][t])
                             {
                                 contributors++;
-                                int argb = colors[patterns[t][dx + dy * N]];
-                                r += (argb & 0xff0000) >> 16;
-                                g += (argb & 0xff00) >> 8;
-                                b += argb & 0xff;
+                                result = allTiles[patternIndexes[t][dx + dy * N]];
                             }
                     }
                 bitmap[i] = unchecked((int)0xff000000 | ((r / contributors) << 16) | ((g / contributors) << 8) | b / contributors);
             }
         }
-        BitmapHelper.SaveBitmap(bitmap, MX, MY, filename);
+        //BitmapHelper.SaveBitmap(bitmap, MX, MY, filename);
         ;    }
 
     public string TextOutput()
