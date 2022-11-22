@@ -16,6 +16,7 @@ public class OverlappingTileModel  : Model
     bool blackBackground;
     Tilemap tilemap; 
     List<TileBase[]> patterns;
+    List<int[]> patternIndexes;
     Tilemap target;
 
     public OverlappingTileModel(Tilemap tilemap, bool periodicInput, int width, int height, int N,
@@ -41,10 +42,15 @@ public class OverlappingTileModel  : Model
         T = tilemap.GetUsedTilesCount() + 1;
         bool[][][] relations = new bool [T][][];
 
-        static TileBase[] pattern(Func<int, int, TileBase> f, int N)
+        static (TileBase[], int[]) pattern (Func<int, int, int> f, Func<int, TileBase> g, int N)
         {
-            TileBase[] result = new TileBase[N*N];
-            for (int x=0; x<N; x++)for (int y=0; y<N; y++) result[x + y * N] = f(x, y);
+            (TileBase[] pattern, int[] index)  result = (new TileBase[N*N], new int[N*N]);
+            for (int x = 0; x < N; x++) for (int y = 0; y < N; y++)
+                {
+                    int i = f(x, y);
+                    result.pattern[x + y * N] = g(i);
+                    result.index[x + y * N] = i;
+                }
             return result;
         }
 
@@ -52,14 +58,15 @@ public class OverlappingTileModel  : Model
         int ymax = periodicInput ? SY : SY - N + 1;
         for (int y = 0; y < ymax; y++) for (int x = 0; x < xmax; x++)
             {
-            TileBase[] p = pattern((dx, dy) => allTiles[(x + dx) % SX + (y + dy) % SY * SX], N);
-            String hash = Helper.HashTilePattern(p);
+            (TileBase[] pattern, int[] index) p = pattern((dx, dy) => (x + dx) % SX + (y + dy) % SY * SX, i => allTiles[i],  N);
+            String hash = Helper.HashTilePattern(p.pattern);
             if (patternIndices.TryGetValue(hash, out int index)) weightList[index] = weightList[index] + 1;
             else
             {
                 patternIndices.Add(hash, weightList.Count);
                 weightList.Add(1.0);
-                patterns.Add(p);
+                patterns.Add(p.pattern);
+                patternIndexes.Add(p.index);
             }
         }
         weights = weightList.ToArray();
@@ -88,11 +95,49 @@ public class OverlappingTileModel  : Model
 
     public override void Save(string filename)
     {
-        int[] tilemapData = new int[MX * MY];
-        //TODO
-        target = new Tilemap();
+        TileBase[] bitmap = new TileBase[MX * MY];
+        if (observed[0] >= 0)
+        {
+            for (int y = 0; y < MY; y++)
+            {
+                int dy = y < MY - N + 1 ? 0 : N - 1;
+                for (int x = 0; x < MX; x++)
+                {
+                    int dx = x < MX - N + 1 ? 0 : N - 1;
+                    bitmap[x + y * MX] = tiles[patterns[observed[x - dx + (y - dy) * MX]][dx + dy * N]];
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < wave.Length; i++)
+            {
+                int contributors = 0, r = 0, g = 0, b = 0;
+                int x = i % MX, y = i / MX;
+                for (int dy = 0; dy < N; dy++) for (int dx = 0; dx < N; dx++)
+                    {
+                        int sx = x - dx;
+                        if (sx < 0) sx += MX;
 
-;    }
+                        int sy = y - dy;
+                        if (sy < 0) sy += MY;
+
+                        int s = sx + sy * MX;
+                        if (!periodic && (sx + N > MX || sy + N > MY || sx < 0 || sy < 0)) continue;
+                        for (int t = 0; t < T; t++) if (wave[s][t])
+                            {
+                                contributors++;
+                                int argb = colors[patterns[t][dx + dy * N]];
+                                r += (argb & 0xff0000) >> 16;
+                                g += (argb & 0xff00) >> 8;
+                                b += argb & 0xff;
+                            }
+                    }
+                bitmap[i] = unchecked((int)0xff000000 | ((r / contributors) << 16) | ((g / contributors) << 8) | b / contributors);
+            }
+        }
+        BitmapHelper.SaveBitmap(bitmap, MX, MY, filename);
+        ;    }
 
     public string TextOutput()
     {
