@@ -16,6 +16,7 @@ public class OverlappingTileModel  : Model
     bool blackBackground;
     Tilemap tilemap; 
     List<TileBase[]> patterns;
+    Tilemap target;
 
     public OverlappingTileModel(Tilemap tilemap, bool periodicInput, int width, int height, int N,
                             bool periodic, bool blackBackground, bool ground, Heuristic heuristic) : 
@@ -89,7 +90,9 @@ public class OverlappingTileModel  : Model
     {
         int[] tilemapData = new int[MX * MY];
         //TODO
-    }
+        target = new Tilemap();
+
+;    }
 
     public string TextOutput()
     {
