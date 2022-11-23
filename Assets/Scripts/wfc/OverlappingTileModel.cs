@@ -31,13 +31,12 @@ public class OverlappingTileModel  : Model
         TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
         TileBase[] sample = new TileBase[allTiles.Length];
         tiles = new List<TileBase>();
-        for (int i = 0; i < sample.Length; i++)
+        for (int i = 0; i < allTiles.Length; i++)
         {
-            int color = allTiles[i];
+            TileBase tile = allTiles[i];
             int k = 0;
-            for (; k < colors.Count; k++) if (colors[k] == color) break;
-            if (k == colors.Count) colors.Add(color);
-            sample[i] = (byte)k;
+            for (; k < tiles.Count; k++) if (tiles[k].name == tile.name) break;
+            if (k == tiles.Count) tiles.Add(tile);
         }
 
         int SX = bounds.size.x, SY = bounds.size.y;
@@ -106,7 +105,7 @@ public class OverlappingTileModel  : Model
 
     public override void Save(string filename)
     {
-        TileBase[] bitmap = new TileBase[MX * MY];
+        TileBase[] map = new TileBase[MX * MY];
         if (observed[0] >= 0)
         {
             for (int y = 0; y < MY; y++)
@@ -115,7 +114,7 @@ public class OverlappingTileModel  : Model
                 for (int x = 0; x < MX; x++)
                 {
                     int dx = x < MX - N + 1 ? 0 : N - 1;
-                    bitmap[x + y * MX] = tiles[patternIndexes[observed[x - dx + (y - dy) * MX]][dx + dy * N]];
+                    map[x + y * MX] = tiles[patternIndexes[observed[x - dx + (y - dy) * MX]][dx + dy * N]];
                 }
             }
         }
@@ -139,10 +138,10 @@ public class OverlappingTileModel  : Model
                         for (int t = 0; t < T; t++) if (wave[s][t])
                             {
                                 contributors++;
-                                result = allTiles[patternIndexes[t][dx + dy * N]];
+                                result = tiles[patternIndexes[t][dx + dy * N]];
                             }
                     }
-                bitmap[i] = unchecked((int)0xff000000 | ((r / contributors) << 16) | ((g / contributors) << 8) | b / contributors);
+                map[i] = unchecked((int)0xff000000 | ((r / contributors) << 16) | ((g / contributors) << 8) | b / contributors);
             }
         }
         //BitmapHelper.SaveBitmap(bitmap, MX, MY, filename);
