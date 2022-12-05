@@ -103,6 +103,18 @@ public class OverlappingTileModel  : Model
         }
     }
 
+    public void saveTileToTarget(TileBase t, int x, int y)
+    {
+        target.SetTile(new Vector3Int(x, y, 0), t);
+    }
+
+    public void saveTilemap()
+    {
+        for (int y = 0; y < MY; y++) for (int x = 0; x < MX; x++)
+            {
+
+            }
+    }
     public override void Save(string filename)
     {
         TileBase[] map = new TileBase[MX * MY];
@@ -114,7 +126,13 @@ public class OverlappingTileModel  : Model
                 for (int x = 0; x < MX; x++)
                 {
                     int dx = x < MX - N + 1 ? 0 : N - 1;
-                    map[x + y * MX] = tiles[patternIndexes[observed[x - dx + (y - dy) * MX]][dx + dy * N]];
+                    map[x + y * MX] = tiles
+                        [patternIndexes
+                            [observed
+                                [x - dx + (y - dy) * MX]
+                                ]
+                                [dx + dy * N]
+                        ];
                 }
             }
         }
@@ -141,7 +159,7 @@ public class OverlappingTileModel  : Model
                                 result = tiles[patternIndexes[t][dx + dy * N]];
                             }
                     }
-                map[i] = unchecked((int)0xff000000 | ((r / contributors) << 16) | ((g / contributors) << 8) | b / contributors);
+                //map[i] = unchecked((int)0xff000000 | ((r / contributors) << 16) | ((g / contributors) << 8) | b / contributors);
             }
         }
         //BitmapHelper.SaveBitmap(bitmap, MX, MY, filename);
