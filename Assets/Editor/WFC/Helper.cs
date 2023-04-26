@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-    static class Helper
+﻿
+namespace WFC_Unity_Luyso
+{
+    public static class Helper
     {
         public static int Random(this double[] weights, double r)
         {
@@ -20,7 +17,16 @@ using System.Threading.Tasks;
             }
             return 0;
         }
+        public static readonly int[] dx = { -1, 0, 1, 0 };
+        public static readonly int[] dy = { 0, 1, 0, -1 };
+        public static readonly int[] opposite = { 2, 3, 0, 1 };
+        
     }
+    public enum Heuristic { Entropy, MRV, Scanline };
+
+    
+}
+
 
 
 

@@ -1,21 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 using System;
-using UnityEditor;
-using static UnityEngine.Tilemaps.Tilemap;
+using System.IO;
+using Newtonsoft.Json;
+using UnityEngine.Serialization;
+using static WFC_Unity_Luyso.Helper;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 
-namespace fire
+namespace WFC_Unity_Luyso
 {
     public class OverlapEditor : MonoBehaviour
     {
         public Tilemap inputGrid;
-        public Tilemap outputGrid;
-        [Tooltip("For tiles usualy set to 1. If tile contain just a color can set to higher value")]
+        [FormerlySerializedAs("outputGrid")] public GameObject outputPrefab;
+        private Tilemap outputGrid;
+
+        [Tooltip("Recommended values between 2 and 4")]
         public int patternSize;
         [Tooltip("How many times algorithm will try creating the output before quiting")]
         public int maxIterations;
@@ -24,52 +30,39 @@ namespace fire
         [Tooltip("Output image height")]
         public int outputHeight = 5;
         [Tooltip("Between 1 and 8, any other value will be tweaked")]
-        public int simmetry = 8;
+        public int simmetry = 1;
         [Tooltip("")]
         public bool periodic = false;
         [Tooltip("")]
         public String savedName = "";
+        [Tooltip("")]
+        public String modelName = "";
 
-        private UnityEvent<Tilemap> outputEditionEvent;
-        internal void FillTilemap()
-        {
-            Debug.Log("Potato");
-            if (wfc.Fill(seed, maxIterations > 0 ? maxIterations : int.MaxValue))
-                wfc.Save("owo");
-            else Debug.Log("Faileada");
+        public bool overrideOldMap;
+        
+        public Heuristic heuristicType;
 
-        }
-
-        [Tooltip("Funciona Entropy y Scanline")]
-        public Model.Heuristic heuristicType;
-        [Tooltip("Funciona Entropy y Scanline")]
-        public int seed;
-        OverModel wfc;
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            CreateWFC();
-
-            CreateTilemap();
-            SaveTilemap();
-        }
+        private int seed;
+        OverlappingTilemapWfcModelCreator wfc;
+        [SerializeField] internal TilemapWfcModel model;
         public void CreateWFC()
         {
             if (simmetry < 1) simmetry = 1;
             if (simmetry > 8) simmetry = 8;
-
-            if (inputGrid && outputGrid)
+            
+            if (inputGrid)
             {
-                outputGrid.ClearAllTiles();
-                wfc = new OverModel(inputGrid, outputGrid, patternSize, this.outputWidth, this.outputHeight, this.periodic, this.simmetry, heuristicType);
+                wfc = new OverlappingTilemapWfcModelCreator(inputGrid, patternSize,
+                    periodic, simmetry);
+                model = wfc.getModel();
             }
-            wfc.Init();
         }
-        public void CreateTilemap()
+        public void SolveWFC()
         {
-            if (wfc.Run(seed, maxIterations > 0 ? maxIterations : int.MaxValue))
-                wfc.Save("owo");
+            clearOutput();
+            WfcSolver solver = new WfcSolver(model, this.outputWidth, this.outputHeight);
+            if (solver.Run(seed, maxIterations > 0 ? maxIterations : int.MaxValue))
+                wfc.Save(outputGrid, solver.result, outputWidth, outputHeight);
             else Debug.Log("Fail");
         }
 
@@ -83,8 +76,10 @@ namespace fire
             }
             catch (ArgumentException e)
             {
+            #if UNITY_EDITOR
                 AssetDatabase.CreateFolder("Assets", "SavedTilemaps");
                 saveTilemapPrefab(dir);
+            #endif
             }
 
         }
@@ -95,14 +90,40 @@ namespace fire
             seed = s.Next();
 
         }
-        private void saveTilemapPrefab(String s)
+        private void saveTilemapPrefab(String name)
         {
-            GameObject prefab = PrefabUtility.CreatePrefab(s, outputGrid.gameObject, ReplacePrefabOptions.ReplaceNameBased);
-            Debug.Log("Saved as " + s);
+            string _data= JsonUtility.ToJson(model);
+            Debug.Log(_data);
+            using (StreamWriter file = File.CreateText($@"Assets/Tilemaps/{name}.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+            
+                //serialize object directly into file stream
+                serializer.Serialize(file, _data);
+            }
+
         }
 
+        internal void SaveModel()
+        {
+            wfc.exportModel(modelName);
+        }
 
+        internal void createOutput()
+        {
+            GameObject outputTilemapGameObject = Instantiate(outputPrefab);
+            outputGrid = outputTilemapGameObject.GetComponent<Tilemap>();
+            outputTilemapGameObject.transform.SetParent(this.gameObject.transform);
+        }
 
+        internal void clearOutput()
+        {
+            if (outputGrid && overrideOldMap)
+            {
+                outputGrid.ClearAllTiles();
+            }
+            else createOutput();
+        }
     }
 
 

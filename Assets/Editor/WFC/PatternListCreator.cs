@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace LuysoWFC
+namespace WFC_Unity_Luyso
 {
-    public class PatternListCreator
+    public class PatternList
     {
         public List<byte[]> patterns;
         public int T;
         public double[] weights;
-        public PatternListCreator(byte[] sample, int SX, int SY, int N, int simmetry, bool periodicInput, int tilesCount)
+        public PatternList(byte[] sample, int SX, int SY, int N, int simmetry, bool periodicInput, int tilesCount)
         {
             int xmax = periodicInput ? SX : SX - N + 1;
             int ymax = periodicInput ? SY : SY - N + 1;

@@ -1,0 +1,16 @@
+{
+    "name": "WFC_Unity_Luyso",
+    "rootNamespace": "WFC_Unity_Luyso",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

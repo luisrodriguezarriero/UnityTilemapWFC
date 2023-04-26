@@ -3,15 +3,17 @@ using System.Collections;
 using UnityEngine.Tilemaps;
 using UnityEngine;
 using System;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace WFC_Unity_Luyso
 {
-    public class OverlappingModelCreator : Model
+    public class OverlappingTilemapWfcModelCreator : TilemapWfcModelCreator
     {
-        private TileBase[] tiles;
+        TileBase[] tiles;
         List<byte[]> patterns;
-        public OverlappingModelCreator(Tilemap inputImage, int patternSize, int outputWidth, int outputHeight, bool periodic, int simmetry) :
-            base(outputWidth, outputHeight, patternSize, periodic)
+        public OverlappingTilemapWfcModelCreator(Tilemap inputImage, int patternSize, bool periodic, int simmetry) :
+            base(patternSize, periodic)
         {
 
             TileBase[] allTiles = GetTileList(inputImage);
@@ -42,9 +44,6 @@ namespace WFC_Unity_Luyso
             tiles = distinctTiles.ToArray();
             return inputAsInts;
         }
-
-        
-
         protected void InitPropagator()
         {
             propagator = new int[4][][];
@@ -86,9 +85,8 @@ namespace WFC_Unity_Luyso
             return allTiles;
         }
 
-        public override void Save(string filename)
+        public override void Save(Tilemap output, int[] observed, int MX, int MY)
         {
-            
             if (observed[0] >= 0)
             {
                 for (int y = 0; y < MY; y++)
@@ -99,7 +97,7 @@ namespace WFC_Unity_Luyso
                         int dx = x < MX - N + 1 ? 0 : N - 1;
                         try
                         {
-                            outputImage.SetTile(new Vector3Int(x, y, 0), tiles[patterns[observed[x - dx + (y - dy) * MX]][dx + dy * N]]);
+                            output.SetTile(new Vector3Int(x, y, 0), tiles[patterns[observed[x - dx + (y - dy) * MX]][dx + dy * N]]);
                         }
                         catch(ArgumentOutOfRangeException e)
                         {
@@ -110,65 +108,22 @@ namespace WFC_Unity_Luyso
             }
             //Debug.Log(ToString());
         }
-        
-        private void InitWave()
+
+        private TilemapWfcModel model;
+        public void exportModel(string name = "overlapModel")
         {
-            wave = new bool[MX * MY][];
-            for (int i = 0; i < wave.Length; i++)
-            {
-                wave[i] = new bool[T];
-            }
-        }
-        private void InitStack()
-        {
+            TilemapWfcModel model = ScriptableObject.CreateInstance<TilemapWfcModel>();
+            model.setValues(tiles, patterns, propagator, T, N, periodic, ground, weights);
+
+            model.ExportToJson(name);
 
         }
 
-
-        protected bool isNodeExcluded(int n)
+        public TilemapWfcModel getModel()
         {
-            return (!periodic && (n % MX + N > MX || n / MX + N > MY));
-        }
-
-        public override bool isEmpty()
-        {
-            return outputImage.GetUsedSpritesCount() > 0;
-            
-        }
-
-        private bool doesItHaveInvalidTiles()
-        {
-            TileBase[] usedTiles = outputImage.GetTilesBlock(outputImage.cellBounds);
-            foreach(TileBase t in usedTiles)
-            {
-                bool found = false;
-                for (int i = 0; i < tiles.Length && !found; i++)
-                {
-                    if (t == tiles[i]) found = true;
-                }
-                if (!found) return true;
-            }
-            return false;
-        }
-
-        private void observeUserChanges()
-        {
-            List<TileBase> tileList = new List<TileBase>(tiles);
-            BoundsInt bounds = outputImage.cellBounds;
-            for(int x = bounds.x; x<bounds.xMax; x++)
-            {
-                for (int y = bounds.y; y < bounds.yMax; y++)
-                {
-                    TileBase t = outputImage.GetTile(new Vector3Int(x, y, 0));
-                    int n = tileList.IndexOf(t);
-                    int wavePosition = y * MX + x;
-                    if (n >= 0) 
-                    {
-                        Observe(wavePosition, n);
-                        //Debug.Log($"Pongo algo en {wavePosition}, el {n}");
-                    }
-                }
-            }
+            model = ScriptableObject.CreateInstance<TilemapWfcModel>();
+            model.setValues(tiles, patterns, propagator, T, N, periodic, ground, weights);
+            return model;
         }
     }
 }

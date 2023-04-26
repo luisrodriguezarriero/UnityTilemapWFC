@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if  UNITY_EDITOR
 using UnityEditor;
+#endif
 
-
-namespace fire
+namespace WFC_Unity_Luyso
 {
+#if  UNITY_EDITOR
     [CustomEditor(typeof(OverlapEditor))]
 
     public class LuysoWFCOverlapInspector : Editor
@@ -15,29 +18,45 @@ namespace fire
             DrawDefaultInspector();
 
             OverlapEditor myScript = (OverlapEditor)target;
-            if (GUILayout.Button("New tilemap"))
+            if (myScript.inputGrid != null)
             {
-                myScript.GenerateSeed();
-                myScript.CreateWFC();
-                myScript.CreateTilemap();
-            }
-            if (GUILayout.Button("Create Empty Tilemap"))
-            {
-                myScript.CreateWFC();
-            }
-            if (GUILayout.Button("Fill Tilemap"))
-            {
-                myScript.FillTilemap();
-            }
-            if (GUILayout.Button("New Tilemap From Seed"))
-            {
-                myScript.CreateWFC();
-                myScript.CreateTilemap();
-            }
-            if (GUILayout.Button("Save tilemap"))
-            {
-                myScript.SaveTilemap();
+                if (GUILayout.Button("Create Map"))
+                {
+                    myScript.CreateWFC();
+                    myScript.GenerateSeed();
+                    myScript.SolveWFC();
+                }
+                
+                if (GUILayout.Button("Create Overlapping Model"))
+                {
+                    myScript.CreateWFC();
+                }
+
+                if (myScript.model != null)
+                {
+                    if (GUILayout.Button("Solve Model"))
+                    {
+                        myScript.GenerateSeed();
+                        myScript.SolveWFC();
+                    }
+
+                    if (GUILayout.Button("Solve Model from seed"))
+                    {
+                        myScript.SolveWFC();
+                    }
+                }
+
+                if (GUILayout.Button("Save Model"))
+                {
+                    myScript.SaveModel();
+                }
+
+                if (GUILayout.Button("Save Map"))
+                {
+                    myScript.SaveTilemap();
+                }
             }
         }
     }
+#endif
 }

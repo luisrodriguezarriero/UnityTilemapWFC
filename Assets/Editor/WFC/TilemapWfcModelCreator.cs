@@ -1,8 +1,8 @@
-﻿// Copyright (C) 2016 Maxim Gumin, The MIT License (MIT)
-
+﻿
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Random = System.Random;
 
 namespace WFC_Unity_Luyso
@@ -34,7 +34,6 @@ namespace WFC_Unity_Luyso
         public bool Ground => ground;
 
         public double[] Weights => weights;
-
-        public abstract void Save(string filename, int[] observed, int MX, int MY);
+        public abstract void Save(Tilemap outout, int[] observed, int MX, int MY);
     }
 }
