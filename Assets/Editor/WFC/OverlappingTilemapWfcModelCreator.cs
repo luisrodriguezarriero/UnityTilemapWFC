@@ -4,26 +4,21 @@ using UnityEngine.Tilemaps;
 using UnityEngine;
 using System;
 
-namespace fire
+namespace WFC_Unity_Luyso
 {
-    public class OverModel : Model
+    public class OverlappingModelCreator : Model
     {
-        private Tilemap inputImage;
-        private Tilemap outputImage;
-
         private TileBase[] tiles;
         List<byte[]> patterns;
-        public OverModel(Tilemap inputImage, Tilemap outputImage, int patternSize, int outputWidth, int outputHeight, bool periodic, int simmetry, Heuristic heuristicType) :
-            base(outputWidth, outputHeight, patternSize, periodic, heuristicType)
+        public OverlappingModelCreator(Tilemap inputImage, int patternSize, int outputWidth, int outputHeight, bool periodic, int simmetry) :
+            base(outputWidth, outputHeight, patternSize, periodic)
         {
-            this.inputImage = inputImage;
-            this.outputImage = outputImage;
 
-            TileBase[] allTiles = GetTileList();
+            TileBase[] allTiles = GetTileList(inputImage);
             byte[] tilesAsBytes = TilesAsBytes(allTiles);
-            (int SX, int SY) = InputSize();
+            (int SX, int SY) = InputSize(inputImage);
 
-            LuysoWFC.PatternListCreator p = new LuysoWFC.PatternListCreator(tilesAsBytes, SX, SY, N, simmetry, periodic, inputImage.GetUsedTilesCount());
+            PatternList p = new PatternList(tilesAsBytes, SX, SY, N, simmetry, periodic, inputImage.GetUsedTilesCount());
 
             T = p.T;
             patterns = p.patterns;
@@ -48,6 +43,7 @@ namespace fire
             return inputAsInts;
         }
 
+        
 
         protected void InitPropagator()
         {
@@ -66,6 +62,7 @@ namespace fire
                 }
             }
         }
+        
         static bool agrees(byte[] p1, byte[] p2, int dx, int dy, int N)
         {
             int xmin = dx < 0 ? 0 : dx, xmax = dx < 0 ? dx + N : N, ymin = dy < 0 ? 0 : dy, ymax = dy < 0 ? dy + N : N;
@@ -73,7 +70,7 @@ namespace fire
             return true;
         }
 
-        private (int, int) InputSize()
+        private (int, int) InputSize(Tilemap inputImage)
         {
             BoundsInt inputBounds = inputImage.cellBounds;
             int SX = inputBounds.xMax - inputBounds.xMin;
@@ -81,12 +78,7 @@ namespace fire
             return (SX, SY);
         }
 
-        private Boolean CheckEmptySpaces()
-        {
-            return false; //TODO
-        }
-
-        private TileBase[] GetTileList()
+        private TileBase[] GetTileList(Tilemap inputImage)
         {
             inputImage.CompressBounds();
             BoundsInt inputBounds = inputImage.cellBounds;
@@ -96,6 +88,7 @@ namespace fire
 
         public override void Save(string filename)
         {
+            
             if (observed[0] >= 0)
             {
                 for (int y = 0; y < MY; y++)
@@ -117,11 +110,7 @@ namespace fire
             }
             //Debug.Log(ToString());
         }
-
-        void InitHeuristic()
-        {
-            
-        }
+        
         private void InitWave()
         {
             wave = new bool[MX * MY][];
@@ -141,6 +130,45 @@ namespace fire
             return (!periodic && (n % MX + N > MX || n / MX + N > MY));
         }
 
+        public override bool isEmpty()
+        {
+            return outputImage.GetUsedSpritesCount() > 0;
+            
+        }
 
+        private bool doesItHaveInvalidTiles()
+        {
+            TileBase[] usedTiles = outputImage.GetTilesBlock(outputImage.cellBounds);
+            foreach(TileBase t in usedTiles)
+            {
+                bool found = false;
+                for (int i = 0; i < tiles.Length && !found; i++)
+                {
+                    if (t == tiles[i]) found = true;
+                }
+                if (!found) return true;
+            }
+            return false;
+        }
+
+        private void observeUserChanges()
+        {
+            List<TileBase> tileList = new List<TileBase>(tiles);
+            BoundsInt bounds = outputImage.cellBounds;
+            for(int x = bounds.x; x<bounds.xMax; x++)
+            {
+                for (int y = bounds.y; y < bounds.yMax; y++)
+                {
+                    TileBase t = outputImage.GetTile(new Vector3Int(x, y, 0));
+                    int n = tileList.IndexOf(t);
+                    int wavePosition = y * MX + x;
+                    if (n >= 0) 
+                    {
+                        Observe(wavePosition, n);
+                        //Debug.Log($"Pongo algo en {wavePosition}, el {n}");
+                    }
+                }
+            }
+        }
     }
 }

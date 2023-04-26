@@ -15,7 +15,21 @@ namespace fire
             DrawDefaultInspector();
 
             OverlapEditor myScript = (OverlapEditor)target;
-            if (GUILayout.Button("Create tilemap"))
+            if (GUILayout.Button("New tilemap"))
+            {
+                myScript.GenerateSeed();
+                myScript.CreateWFC();
+                myScript.CreateTilemap();
+            }
+            if (GUILayout.Button("Create Empty Tilemap"))
+            {
+                myScript.CreateWFC();
+            }
+            if (GUILayout.Button("Fill Tilemap"))
+            {
+                myScript.FillTilemap();
+            }
+            if (GUILayout.Button("New Tilemap From Seed"))
             {
                 myScript.CreateWFC();
                 myScript.CreateTilemap();
@@ -23,14 +37,6 @@ namespace fire
             if (GUILayout.Button("Save tilemap"))
             {
                 myScript.SaveTilemap();
-            }
-            if (GUILayout.Button("Init Tilemap"))
-            {
-                myScript.ClearTilemap();
-            }
-            if (GUILayout.Button("Fill Tilemap"))
-            {
-                myScript.FillTilemap();
             }
         }
     }
