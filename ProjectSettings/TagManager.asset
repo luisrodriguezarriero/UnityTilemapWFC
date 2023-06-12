@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Food
+  - Water
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -43,6 +46,9 @@ TagManager:
     locked: 0
   - name: Aux
     uniqueID: 3274140245
+    locked: 0
+  - name: Map
+    uniqueID: 703731529
     locked: 0
   - name: Characters
     uniqueID: 3622027621

@@ -1,0 +1,16 @@
+{
+    "name": "Snake",
+    "rootNamespace": "SnakeGame",
+    "references": [
+        "GUID:854c3091afd14924999985d94660ba70"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

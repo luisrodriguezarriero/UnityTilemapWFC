@@ -1,9 +1,12 @@
 {
-    "name": "WFC_Unity_Luyso",
-    "rootNamespace": "WFC_Unity_Luyso",
+    "name": "WFC_Luyso",
+    "rootNamespace": "WFC",
     "references": [],
     "includePlatforms": [
-        "Editor"
+        "Editor",
+        "WSA",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
