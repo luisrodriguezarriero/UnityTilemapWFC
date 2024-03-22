@@ -56,6 +56,9 @@ TagManager:
   - name: mapGUI
     uniqueID: 947597555
     locked: 0
+  - name: MapBG
+    uniqueID: 417341443
+    locked: 0
   - name: GUI
     uniqueID: 2665597043
     locked: 0

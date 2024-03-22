@@ -1,20 +1,26 @@
 using UnityEngine;
 
-namespace WFC
+namespace WFC.Texture
 {
     public class WfcTextureSolution :WfcSolution
     {
-        public WfcTextureSolution(int mx, int my, int t, int n, int[] observed, bool[][] wave, int[][] patterns, bool periodic, Color32[] tiles): 
+        Texture2D output;
+        public WfcTextureSolution(int mx, int my, int t, int n, int[] observed, bool[][] wave, int[][] patterns, bool periodic, Color[] colors): 
             base(mx, my, t, n, observed, wave, patterns, periodic)
         {
-            this.tiles = tiles;
+            this.colors = new Color32[colors.Length];
+            for (int i = 0; i < colors.Length; i++)
+            {
+                this.colors[i]=colors[i];
+            }
         }
-        Color32[] tiles;
-        
+        Color32[] colors;
+
+        public Texture2D Output => output;
+
         override public void Save()
         {
-            var output = new Texture2D(MX, MY); 
-            var bitmap = new int[MX * MY];
+            output = new Texture2D(MX, MY); 
             if (observed[0] >= 0)
             {
                 for (var y = 0; y < MY; y++)
@@ -23,7 +29,7 @@ namespace WFC
                     for (var x = 0; x < MX; x++)
                     {
                         var dx = x < MX - N + 1 ? 0 : N - 1;
-                        output.SetPixel(x, y, tiles[patterns[observed[x - dx + (y - dy) * MX]][dx + dy * N]]);
+                        Output.SetPixel(x, y, colors[patterns[observed[x - dx + (y - dy) * MX]][dx + dy * N]]);
                     }
                 }
             }
@@ -47,7 +53,7 @@ namespace WFC
                         for (var t = 0; t < T; t++) if (wave[s][t])
                         {
                             contributors++;
-                            var c = tiles[patterns[t][dx + dy * N]];
+                            var c = colors[patterns[t][dx + dy * N]];
                             r += c.r;
                             g += c.g;
                             b += c.b;
@@ -57,7 +63,7 @@ namespace WFC
                     }
 
                     var color = MedianColor(r, g, b, a, contributors);
-                    output.SetPixel(x, y, color);
+                    Output.SetPixel(x, y, color);
                 }
             }
             

@@ -23,17 +23,15 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(_QuitGame(audio.clip.length));
     }
 
-    private IEnumerator _PlayGame(float timeToWait, int scene)
+    private IEnumerator _PlayGame(float timeToWait, int sceneID)
     {
         yield return new WaitForSeconds(timeToWait);
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene(sceneID);
     }
     
     private IEnumerator _QuitGame(float timeToWait)
     {
         yield return new WaitForSeconds(timeToWait);
         Application.Quit();
-    }
-        
-   
+    } 
 }

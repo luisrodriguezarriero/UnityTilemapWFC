@@ -1,4 +1,4 @@
-namespace WFC
+namespace WFC.Texture
 {
     public abstract class WfcSolution{
         public WfcSolution(int mx, int my, int t, int n, int[] observed, bool[][] wave, int[][] patterns, bool periodic) 

@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 
+[Serializable]
 public class WfcModel
 {
-    internal List<byte[]> patterns;
+    public List<byte[]> patterns{get; protected set;}
     internal int[][][] propagator;
     internal int nTiles, n;
     internal bool periodic, ground;

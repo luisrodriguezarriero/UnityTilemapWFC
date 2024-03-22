@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 353289742696323709}
   - component: {fileID: 353289742696323705}
   - component: {fileID: 3763226934407475886}
+  - component: {fileID: -4289487552867665921}
   m_Layer: 0
   m_Name: Snake
   m_TagString: Player
@@ -147,7 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5594e4dff57874cae4195007e152a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ate: 0
   segmentPrefab: {fileID: 2085726900663560409, guid: f26441c6e0931c348bacf09d295f86bb, type: 3}
   segments: []
   ateSound: {fileID: 8300000, guid: 9ed2200042e874445bf198af5a25f283, type: 3}
@@ -248,3 +248,69 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4289487552867665921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353289742696323698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 2620b8b5953adef40997fca3e0c8a1cc, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c1c3da6b-9439-4395-81be-1426f8f12089
+    m_ActionName: Snake/Move[/Keyboard/upArrow,/Keyboard/w,/Keyboard/downArrow,/Keyboard/s,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2d7eccc9-45d2-456a-a8ba-61ebcb23017e
+    m_ActionName: UI/Up[/Keyboard/w,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0780aaa2-c912-471b-9c9c-489505d9fdba
+    m_ActionName: UI/Down[/Keyboard/downArrow,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 731e640c-c3bd-4a62-b703-20ac0cf252af
+    m_ActionName: UI/Enter1[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d994ba1e-e7bf-401d-b276-8e9683112dba
+    m_ActionName: UI/Pause[/Keyboard/space,/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: af980738-86fc-40d9-8b2e-c43d1b8ef919
+    m_ActionName: UI/Leave[/Keyboard/backspace,/Keyboard/escape]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Keyboard&Mouse
+  m_DefaultActionMap: Snake
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}

@@ -1,39 +1,43 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using UnityEngine;
 using System;
-using JetBrains.Annotations;
-using static WFC.Helper;
+using static WFC.WfcUtilities;
+using System.Linq;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
-namespace WFC
+namespace WFC.TiledWFC
 {
     public class OverlappingTilemapWfcModelCreator : TilemapWfcModelCreator
     {
         protected TileBase[] tiles;
         protected readonly List<byte[]> patterns;
+        protected TileBase[] floorTiles;
         public OverlappingTilemapWfcModelCreator(
-            Tilemap inputImage, int patternSize, bool periodic, int symmetry, bool ground) :
+            Tilemap inputImage, int patternSize, bool periodic, int symmetry, bool ground, TileBase[] floorTiles = null) :
             base(patternSize, periodic, ground)
         {
             var allTiles = GetTileList(inputImage);
             var tilesAsBytes = TilesAsBytes(allTiles);
             var (sx, sy) = InputSize(inputImage);
 
-            var p = new PatternList(tilesAsBytes, sx, sy, N, symmetry, periodic, inputImage.GetUsedTilesCount());
+            var patternList = new PatternList(tilesAsBytes, sx, sy, N, symmetry, periodic, inputImage.GetUsedTilesCount());
 
-            T = p.T;
-            patterns = p.patterns;
-            weights = p.weights;
+            T = patternList.T;
+            patterns = patternList.patterns;
+            weights = patternList.weights;
 
             InitPropagator();   
             model = new TilemapWfcModel(tiles, patterns, propagator, N, T, periodic, weights);
         }
 
-        private byte[] TilesAsBytes([NotNull] TileBase[] allTiles)
+        private byte[] TilesAsBytes(TileBase[] allTiles)
         {
             if (allTiles == null) throw new ArgumentNullException(nameof(allTiles));
+
             var distinctTiles = new List<TileBase>();
             var inputAsInts = new byte[allTiles.Length];
+
             for (var i = 0; i < allTiles.Length; i++)
             {
                 if (!distinctTiles.Contains(allTiles[i]))
@@ -42,6 +46,7 @@ namespace WFC
                 }
                 inputAsInts[i] = (byte)distinctTiles.IndexOf(allTiles[i]);
             }
+            
             tiles = distinctTiles.ToArray();
             return inputAsInts;
         }
@@ -56,7 +61,7 @@ namespace WFC
                 {
                     List<int> list = new();
                     for (var t2 = 0; t2 < T; t2++)
-                        if (agrees(patterns[t], patterns[t2], dx[d], dy[d], N)) list.Add(t2);
+                        if (arePatternsHardCompatible(patterns[t], patterns[t2], dx[d], dy[d], N)) list.Add(t2);
                     propagator[d][t] = list.ToArray();
 
                     list.Clear();
@@ -80,8 +85,12 @@ namespace WFC
             return allTiles;
         }
 
-        public override void Save(Tilemap output, int[] observed, int mx, int my)
+        public override void Save(Tilemap output, int[] observed, int mx, int my, Tilemap floorGrid = null)
         {
+            bool useFloor = floorTiles != null && floorTiles.Length > 0 && floorGrid;
+
+            floorGrid.gameObject.tag = "Untagged";
+            output.gameObject.tag = "Wall";
             if (observed[0] >= 0)
             {
                 for (var y = 0; y < my; y++)
@@ -92,7 +101,10 @@ namespace WFC
                         var dx = x < mx - N + 1 ? 0 : N - 1;
                         try
                         {
-                            output.SetTile(new Vector3Int(x, y, 0), tiles[patterns[observed[x - dx + (y - dy) * mx]][dx + dy * N]]);
+                            TileBase t = tiles[patterns[observed[x - dx + (y - dy) * mx]][dx + dy * N]];
+                            Vector3Int location = new Vector3Int(x, y, 0);
+                            if(useFloor && floorTiles.Contains(t)) floorGrid.SetTile(location, t);
+                            else output.SetTile(location, t);
                         }
                         catch(ArgumentOutOfRangeException e)
                         {
@@ -102,20 +114,9 @@ namespace WFC
                     }
                 }
             }
-            //Debug.Log(ToString());
         }
 
-        private TilemapWfcModel model;
-        public void ExportModel(string name = "overlapModel")
-        {
-            model = new TilemapWfcModel(tiles, patterns, propagator, N, T, periodic, weights, ground);
+        public TilemapWfcModel model{get; private set;}
 
-            model.ExportToJson(name);
-
-        }
-        public TilemapWfcModel GetModel()
-        {
-            return model;
-        }
     }
 }

@@ -7,18 +7,16 @@ using UnityEngine.Serialization;
 
 namespace SnakeGame
 {
-    public class Snake : MonoBehaviour
+    public class Snake : PlayerController2D
     {
-        private bool isMoving;
+        Punctuation punctuation;
         private bool gameLose;
-        [SerializeField] private bool ate = false;
-        private Vector3 origPos, targetPos;
+        private bool ate = false;
+        private Vector3 origPos;
         [SerializeField] public GameObject segmentPrefab;
-        public static float timeToMove = 0.4f;
-
+        private static float timeToMove = 0.8f;
         private Vector2 direction = Vector2.zero;
         public List<Transform> segments;
-
         [FormerlySerializedAs("AteSound")] public AudioClip ateSound;
         [FormerlySerializedAs("HitSound")] public AudioClip hitSound;
         void Start()
@@ -30,56 +28,39 @@ namespace SnakeGame
         // Update is called once per frame
         void Update()
         {
-            if (Up() && direction != Vector2.down) direction = Vector2.up;
-            else if (Left() && direction != Vector2.left) direction = Vector2.right;
-            else if (Down() && direction != Vector2.up) direction = Vector2.down;
-            else if (Right() && direction != Vector2.right) direction = Vector2.left; 
+
         }
 
-        bool Up()
-        {
-            return Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
-        }
-        
-        bool Left()
-        {
-            return Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
-        }
-        
-        bool Down()
-        {
-            return Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow);
-        }
-        
-        bool Right()
-        {
-            return Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
-        }
-        
+        public static float TimeToMove { get => timeToMove; set => timeToMove = value; }
+
         public IEnumerator MoveSnake()
         {
             while (!gameLose)
             {
                 origPos = transform.position;
-                yield return new WaitForSeconds(timeToMove);
+                yield return new WaitForSeconds(TimeToMove);
                 transform.position = new Vector3(origPos.x + direction.x, origPos.y + direction.y, 0.0f);
-                if (ate)
-                {
-                    GameObject g = (GameObject)Instantiate(segmentPrefab,
+
+                if (ate) addSegment();
+
+                if (segments.Count > 0) moveSegments();
+            }
+        }
+
+        public void addSegment(){
+            GameObject g = Instantiate(segmentPrefab,
                         origPos,
                         Quaternion.identity);
-                    segments.Insert(0, g.transform);
-                    ate = false;
-                }
+            segments.Insert(0, g.transform);
+            ate = false;
+        }
 
-                if (segments.Count > 0)
-                {
-                    segments.Last().position = origPos;
+        void moveSegments(){
+            segments.Last().position = origPos;
 
-                    segments.Insert(0, segments.Last());
-                    segments.RemoveAt(segments.Count - 1);
-                }
-            }
+            segments.Insert(0, segments.Last());
+
+            segments.RemoveAt(segments.Count - 1);
         }
 
         private void OnTriggerEnter2D(Collider2D col)
@@ -88,9 +69,9 @@ namespace SnakeGame
             {
                 StartCoroutine(PlaySound(ateSound));
                 ate = true;
-                timeToMove *= 0.95f;
+                TimeToMove *= 0.97f;
             }
-            else
+            else if(col.gameObject.layer == LayerMask.NameToLayer("Tilemap"))
             {
                 StopCoroutine(MoveSnake());
                 StartCoroutine(PlaySound(hitSound));
@@ -98,12 +79,27 @@ namespace SnakeGame
             }
         }
 
+        public static readonly (int, float)[] speedReductions = { (8, 0.125f), (16, 0.25f), (-1, 0.0f) };
+
         private IEnumerator PlaySound(AudioClip sound)
         {
             AudioSource audioSource = GetComponent<AudioSource>();
             audioSource.clip = sound;
             audioSource.Play();
             yield return new WaitForSecondsRealtime(audioSource.clip.length);
+        }
+
+        protected override void HandleMovementInput(Vector2 movementVector)
+        {
+                 if (movementVector.y > 0 && direction != Vector2.down) direction = Vector2.up;
+            else if (movementVector.x < 0 && direction != Vector2.right) direction = Vector2.left;
+            else if (movementVector.y < 0 && direction != Vector2.up) direction = Vector2.down;
+            else if (movementVector.x > 0 && direction != Vector2.left) direction = Vector2.right; 
+        }
+
+        internal void Reset()
+        {
+            punctuation = new Punctuation(1, 0, 1);
         }
     }
 }

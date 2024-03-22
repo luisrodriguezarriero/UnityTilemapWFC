@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
-namespace _Scripts.Map
+namespace TilemapUtilities
 {
     public static class TilemapExtensions
     {

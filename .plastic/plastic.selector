@@ -1,0 +1,4 @@
+repository "PDG-DEFAULTWFC@Luyso@cloud"
+  path "/"
+    br "/main"
+    co "/main"

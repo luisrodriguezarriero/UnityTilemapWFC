@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Diagnostics;
+using UnityEngine;
 
 namespace WFC
 {
+    [Serializable]
     public class PatternList
     {
         public readonly List<byte[]> patterns;
@@ -22,7 +25,6 @@ namespace WFC
                 for (var x = 0; x < xMax; x++)
                 {
                     var ps = new byte[8][];
-
                     ps[0] = pattern((dx, dy) => sample[(x + dx) % sx + (y + dy) % sy * sx], n);
                     ps[1] = reflect(ps[0], n);
                     ps[2] = rotate(ps[0], n);
@@ -64,9 +66,14 @@ namespace WFC
         static byte[] pattern(Func<int, int, byte> f, int N)
         {
             var result = new byte[N * N];
-            for (var y = 0; y < N; y++) for (var x = 0; x < N; x++) result[x + y * N] = f(x, y);
+            
+            for (var y = 0; y < N; y++) 
+                for (var x = 0; x < N; x++) 
+                    result[x + y * N] = f(x, y);
             return result;
         }
-}
+
+             
+    }
 
 }
