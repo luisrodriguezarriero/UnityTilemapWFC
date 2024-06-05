@@ -8,7 +8,6 @@ namespace SnakeGame
     {
         private List<Vector2> biggestZone;
         private List<Vector2> banlist;
-        
         public ZonesDelimiter(bool[][] grid)
         {
             this.grid = grid;

@@ -41,7 +41,7 @@ namespace SnakeGame
             } 
             catch (IOException e)
             {
-                Debug.Log($"Couldnt Find the Save File due to a {e.GetType()}, creating new File...");
+                Debug.Log($"Couldn't Find the Save File due to a {e.GetType()}, creating new File...");
                 createSaveLocation();
             }
             return null;
@@ -55,7 +55,7 @@ namespace SnakeGame
             }
             catch(Exception e)
             {
-                Debug.Log($"Couldnt create the Save File due to a {e.GetType()}, progress will not be saved inbetween sessions");
+                Debug.Log($"Couldn't create the Save File due to a {e.GetType()}, progress will not be saved in-between sessions");
             }
         }
         PlayerPrefs prefs;
@@ -96,11 +96,12 @@ namespace SnakeGame
         float speed = 1;
         DateTime date;
         public string name;
-
+        /*
         [NonSerialized]
         private static readonly int minNameLength = 3;
         [NonSerialized]
         private static readonly int maxNameLength = 10;
+        */
         [NonSerialized]
         private static readonly string regexText = "^[a-zA-Z0-9]{3,10}$";
         [NonSerialized]

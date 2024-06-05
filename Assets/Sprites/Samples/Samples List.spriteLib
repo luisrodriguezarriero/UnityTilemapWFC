@@ -21,42 +21,42 @@ MonoBehaviour:
       m_Hash: -1521630593
       m_Sprite: {fileID: 21300000, guid: 9a920aafdf09ce640a0da168e744efe5, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 21300000, guid: 9a920aafdf09ce640a0da168e744efe5, type: 3}
+      m_SpriteOverride: {fileID: 0}
     - m_Name: Chess
       m_Hash: -1528755952
       m_Sprite: {fileID: 21300000, guid: 1433c4bac58d9be40bda87af36c7f019, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 21300000, guid: 1433c4bac58d9be40bda87af36c7f019, type: 3}
+      m_SpriteOverride: {fileID: 0}
     - m_Name: Circle
       m_Hash: -753180593
       m_Sprite: {fileID: 21300000, guid: cd976acf055e4f546ba20ad628a5e5b2, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 21300000, guid: cd976acf055e4f546ba20ad628a5e5b2, type: 3}
+      m_SpriteOverride: {fileID: 0}
     - m_Name: City
       m_Hash: -1922454262
       m_Sprite: {fileID: 21300000, guid: b7f39d8558092864ea7baaa27d4cbcf1, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 21300000, guid: b7f39d8558092864ea7baaa27d4cbcf1, type: 3}
+      m_SpriteOverride: {fileID: 0}
     - m_Name: ColoredCity
       m_Hash: 1410116904
       m_Sprite: {fileID: 21300000, guid: 47d91b8238466174ea874c18a59e0ba9, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 21300000, guid: 47d91b8238466174ea874c18a59e0ba9, type: 3}
+      m_SpriteOverride: {fileID: 0}
     - m_Name: Disk
       m_Hash: -1404669380
       m_Sprite: {fileID: 21300000, guid: 510ac6ad25d8ec843a679fa2a9a60df7, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 21300000, guid: 510ac6ad25d8ec843a679fa2a9a60df7, type: 3}
+      m_SpriteOverride: {fileID: 0}
     - m_Name: Dungeon
       m_Hash: -263772660
       m_Sprite: {fileID: 21300000, guid: 0a420c01a3cd5554db7f9bb725173d9a, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 21300000, guid: 0a420c01a3cd5554db7f9bb725173d9a, type: 3}
+      m_SpriteOverride: {fileID: 0}
     - m_Name: Fabric
       m_Hash: 1783592341
       m_Sprite: {fileID: 21300000, guid: 4eccf682c3ca87f4c823a6f92efd2837, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 21300000, guid: 4eccf682c3ca87f4c823a6f92efd2837, type: 3}
+      m_SpriteOverride: {fileID: 0}
     - m_Name: Flowers
       m_Hash: -1307436388
       m_Sprite: {fileID: 21300000, guid: 12bc4e591da302e43a684681b14a4693, type: 3}

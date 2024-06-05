@@ -72,5 +72,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Meta Files
-**/*.meta
 *.cs.meta

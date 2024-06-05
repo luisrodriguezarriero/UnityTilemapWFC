@@ -52,5 +52,8 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": true,
-    "dotnet.defaultSolution": "PDG-DEFAULTWFC.sln"
+    "dotnet.defaultSolution": "LaOla.sln",
+    "cSpell.words": [
+        "Prefs"
+    ]
 }

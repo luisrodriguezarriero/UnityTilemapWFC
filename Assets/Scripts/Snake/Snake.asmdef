@@ -2,10 +2,10 @@
     "name": "Snake",
     "rootNamespace": "SnakeGame",
     "references": [
-        "GUID:854c3091afd14924999985d94660ba70",
-        "GUID:0565e8c189b19724dae0a6e44bf507a3",
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:ffa9101da78363d48a1017f186266616"
+        "GUID:1c73d79a02c16be4dafaafe1d57dc0a8",
+        "GUID:bd24bc51ee69b834ea6386501365bd88",
+        "GUID:dab5d9c11ab619f4d8b86e948a7ee6d4"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
