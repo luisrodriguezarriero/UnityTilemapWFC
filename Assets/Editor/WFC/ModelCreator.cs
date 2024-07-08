@@ -16,7 +16,7 @@
         
         public double[] weights;
 
-        public abstract void Save(UnityEngine.Tilemaps.Tilemap outout, int[] observed, int MX, int MY);
+        public abstract void Save(UnityEngine.Tilemaps.Tilemap output, int[] observed, int MX, int MY);
 
     }
 }
