@@ -17,7 +17,11 @@ namespace AudioUtilities{
 
         public void Add(AudioClip item)
         {
-            throw new System.NotSupportedException();
+            /*
+            var oldSize = sounds.Length;
+            System.Array.Resize(ref sounds, oldSize+1);
+            sounds[oldSize] = item;
+            */
         }
 
         public void Clear()

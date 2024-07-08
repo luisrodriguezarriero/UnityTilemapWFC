@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static SnakeGame.Utilities;
+using static Snake.Utilities;
 
-namespace SnakeGame
+namespace Snake
 {
     public class ZonesDelimiter
     {

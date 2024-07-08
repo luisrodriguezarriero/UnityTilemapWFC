@@ -1,6 +1,7 @@
 using UnityEngine;
+using Snake.UI;
 
-namespace SnakeGame
+namespace Snake
 {
     public sealed class GameStateManager
     {
@@ -8,8 +9,8 @@ namespace SnakeGame
         private GameState state;
         private GameStateManager() {}
         private static GameStateManager _instance;
-        public UIController PauseUI;
-        public UIController GameOverUI;
+        public UI.Controller PauseUI;
+        public UI.Controller GameOverUI;
         public GameState State => state;
         public void Pause() { state = GameState.PAUSE; PauseUI.Activate(); }
         public bool isPaused() => state != GameState.GAME;

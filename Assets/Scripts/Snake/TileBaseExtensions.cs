@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
-namespace SnakeGame
+namespace Snake
 {
     public static class TileBaseExtensions
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SnakeGame{
+namespace Snake{
     public static class Utilities{
         public static Vector2 Pop(this List<Vector2> list)
         {

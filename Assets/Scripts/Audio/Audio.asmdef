@@ -1,3 +1,14 @@
 {
-	"name": "Audio"
+	"name": "Audio",
+	"rootNamespace": "AudioUtilities",
+	"references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

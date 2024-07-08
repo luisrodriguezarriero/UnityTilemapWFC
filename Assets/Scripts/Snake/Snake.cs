@@ -5,16 +5,16 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace SnakeGame
+namespace Snake
 {
     public class Snake : PlayerController2D
     {
-        Punctuation punctuation;
         private bool gameLose;
         private bool ate = false;
         private Vector3 origPos;
         [SerializeField] public GameObject segmentPrefab;
         private static float timeToMove = 0.8f;
+        private static readonly float startingTimeToMove = 0.8f;
         private Vector2 direction = Vector2.zero;
         public List<Transform> segments;
         [FormerlySerializedAs("AteSound")] public AudioClip ateSound;
@@ -23,6 +23,11 @@ namespace SnakeGame
         {
             segments = new List<Transform>();
             StartCoroutine(MoveSnake());
+        }
+
+        public void Reset(){
+            timeToMove=startingTimeToMove;
+            segments = new List<Transform>();
         }
 
         // Update is called once per frame
@@ -97,10 +102,6 @@ namespace SnakeGame
             else if (movementVector.x > 0 && direction != Vector2.left) direction = Vector2.right; 
         }
 
-        internal void Reset()
-        {
-            punctuation = new Punctuation(1, 0, 1);
-        }
     }
 }
 

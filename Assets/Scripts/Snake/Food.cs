@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace SnakeGame
+namespace Snake
 {
     public class Food : MonoBehaviour
     {

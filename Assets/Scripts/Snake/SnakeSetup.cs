@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 using Random = System.Random;
 using UnityEditor;
 
-namespace SnakeGame
+namespace Snake
 {
     public class SnakeSetup {
 

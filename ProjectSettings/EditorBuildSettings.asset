@@ -7,8 +7,8 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
-    guid: dcf293a3395f22e4fab62d54078e352f
+    guid: 1ffbe29132efb4648aa0839aef3c3c5b
   - enabled: 1
     path: Assets/Scenes/SnakeGame.unity
-    guid: 312190db482d3ea4584739bb074db50d
+    guid: 8b6c588410d457f43be7bf41c5ef201d
   m_configObjects: {}

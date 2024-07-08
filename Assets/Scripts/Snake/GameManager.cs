@@ -2,30 +2,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
-using WFC.TiledWFC;
+using WFC.Tilemap;
 using UnityEditor;
-using AudioHandling;
+using AudioUtilities;
 
-namespace SnakeGame
+namespace Snake
 {
-
-
     public class GameManager : MonoBehaviour
     {
-        private GameStateManager game;
+        private GameStateManager gameStateManager;
         readonly int xSize = 19, ySize = 14;
         public GameObject playerPrefab;
         public GameObject foodPrefab;
-        public WfcTilemapOverlapCreator mapGenerator;
+        public WFC.Tilemap.Overlap.TilemapGenerator mapGenerator;
         private GameObject player;
         private List<GameObject> foodList; 
         private readonly Random seed = new Random();
         private void Awake() => Setup();
         public void GameOver()
         {
-            if (game.isPaused())  return;
+            if (gameStateManager.isPaused())  return;
 
-            game.GameOver();
+            gameStateManager.GameOver();
 
             Destroy();
         }   
@@ -42,13 +40,13 @@ namespace SnakeGame
             player.GetComponent<Snake>().Reset();
 
             Setup();
-            game.Resume();    
+            gameStateManager.Resume();    
 
         }
         public void Setup()
         {
-            game = GameStateManager.GetInstance();
-            game.Setup();
+            gameStateManager = GameStateManager.GetInstance();
+            gameStateManager.Setup();
 
             GenerateMap();
 
@@ -70,7 +68,7 @@ namespace SnakeGame
             foodList = setup.MassPlacePrefab(locations.ToArray(), foodPrefab, setup.FoodParent);
 
             player.gameObject.SetActive(true);
-            game.Resume();
+            gameStateManager.Resume();
         }
 
         private int GetPunctuation()
@@ -89,7 +87,7 @@ namespace SnakeGame
             foreach(GameObject food in foodList) DestroyImmediate(food);
         }
 
-        #endif
+#endif
 
         private void GenerateMap()
         {
@@ -113,11 +111,12 @@ namespace SnakeGame
         }
         
     }
+
 #if  UNITY_EDITOR
 
     [CustomEditor(typeof(GameManager))]
 
-    public class GameInspector : Editor
+    public class GameInspector : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

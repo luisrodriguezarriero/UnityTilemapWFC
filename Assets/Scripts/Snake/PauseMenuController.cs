@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-namespace SnakeGame
+namespace Snake
 {
-    public class PauseMenuController : UIController
+    public class PauseMenuController : UI.Controller
     {
 
     }
