@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 83.4}
-  m_SizeDelta: {x: 408.75, y: 70.5}
+  m_SizeDelta: {x: 439, y: 76.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &336981470980360972
 CanvasRenderer:
@@ -896,13 +896,14 @@ GameObject:
   - component: {fileID: 6247200968170056066}
   - component: {fileID: 6247200968170056065}
   - component: {fileID: 6247200968170056064}
+  - component: {fileID: 5340825453280237843}
   m_Layer: 5
   m_Name: ==GAME_OVER==
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6247200968170056068
 RectTransform:
   m_ObjectHideFlags: 0
@@ -937,7 +938,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 9004251981733241925, guid: d00977b97e61b4848b17657d1fe67089, type: 3}
+  m_Camera: {fileID: 0}
   m_PlaneDistance: 0
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -998,7 +999,7 @@ Animator:
   m_GameObject: {fileID: 6247200968170056095}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 435eebebfbd2de1468128c1f7725726e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 47fd39079d13be94abda4d68bc02f878, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
@@ -1008,3 +1009,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5340825453280237843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6247200968170056095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c767dd081fb29314785629c6daab7a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips: {fileID: 11400000, guid: ca97c6c160713874cb6de13aa42a7dcf, type: 2}

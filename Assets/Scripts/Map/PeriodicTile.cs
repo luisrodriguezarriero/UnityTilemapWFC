@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -28,9 +27,7 @@ public class PeriodicTile : Tile
 
         int x = Math.Abs(position.x) % xPeriod;
         int y = Math.Abs(position.y) % yPeriod;
-#if UNITY_EDITOR
-        //Debug.Log($"Trying to show sprite number {x * xPeriod + y} / {n}"  );
-#endif
+
         tileData.sprite = _sources[ x * xPeriod + y ];
     }
 }

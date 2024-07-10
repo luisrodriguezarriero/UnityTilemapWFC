@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cliff
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -1375875812, guid: eb83177592e01674ead3892359c07a65, type: 3}
-  m_DefaultGameObject: {fileID: 1218746961641722008, guid: 0fbc9ff9347cdc04d9831fe3712dd212, type: 3}
+  m_DefaultGameObject: {fileID: 1218746961641722008, guid: d081411cbdd1857458063e8943574854, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0

@@ -1,36 +1,30 @@
 using UnityEngine;
 using AudioUtilities;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem.EnhancedTouch;
-using System.Collections.Generic;
-
 
 namespace Snake.UI
 {
     public class Controller : MonoBehaviour
     {
-        static readonly string[] audioElements = {"onEnabled", "onDisabled", "onQuit"};
+        static readonly string[] audioElements = {"Pick", "Back"};
         [SerializeField] protected AudioData clips;      
-        void OvValidate(){
-
-        }
         void OnDisable()
         {
             Time.timeScale = 1f;
 
-            SoundManager.Instance.Play(clips.getClip("onEnabled"));
+            SoundManager.Instance.Play(clips.getClip(audioElements[1]));
         }
 
         void OnEnable()
         {
             Time.timeScale = 0f;
 
-            SoundManager.Instance.Play(clips.getClip("onDisabled"));
+            SoundManager.Instance.Play(clips.getClip(audioElements[0]));
         }
 
         void Quit()
         {
-            SoundManager.Instance.Play(clips.getClip("onQuit"));
+            SoundManager.Instance.Play(clips.getClip(audioElements[1]));
 
             SceneManager.LoadScene(0);
         }
@@ -42,23 +36,7 @@ namespace Snake.UI
             if(clip!=null) SoundManager.Instance.Play(clip);
         }
 
-
-    }
-
-
-    public class GameOverController : Controller 
-    {
-        void Awake(){
-            //GET PUNCTUATIONS
-
-        }
-
-    }
-
-    public static class ControllerExtension 
-    {
-        public static void DeActivate(this Controller UI) => UI.gameObject.SetActive(false);
-        public static void Activate(this Controller UI) => UI.gameObject.SetActive(true);
-
+        public void DeActivate() => this.gameObject.SetActive(false);
+        public void Activate() => this.gameObject.SetActive(true);
     }
 }

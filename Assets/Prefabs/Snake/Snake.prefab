@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 353289742696323705}
   - component: {fileID: 3763226934407475886}
   - component: {fileID: -4289487552867665921}
+  - component: {fileID: 7564430674692114016}
   m_Layer: 0
   m_Name: Snake
   m_TagString: Player
@@ -86,7 +87,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &353289742696323708
@@ -123,7 +124,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0065446794, y: 0.017264366}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -134,7 +135,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 1
   serializedVersion: 2
-  m_Size: {x: 0.5261006, y: 0.5623627}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0.01
 --- !u!114 &353289742696323705
 MonoBehaviour:
@@ -145,13 +146,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 353289742696323698}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a5594e4dff57874cae4195007e152a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 325e7fa0a7cfec94c8ad9ec18963eef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segmentPrefab: {fileID: 2085726900663560409, guid: f26441c6e0931c348bacf09d295f86bb, type: 3}
+  segmentPrefab: {fileID: 2085726900663560409, guid: 767e8adbbda991b4098dec04c07bd7ec, type: 3}
   segments: []
-  ateSound: {fileID: 8300000, guid: 9ed2200042e874445bf198af5a25f283, type: 3}
-  hitSound: {fileID: 8300000, guid: e6ae1d0b204149b48a325fdb9a97751e, type: 3}
+  ateSound: {fileID: 8300000, guid: 87054440432fcde4cb1b29ff729510ca, type: 3}
+  hitSound: {fileID: 8300000, guid: 4f0ae058214cbc34bbece56cdb4eea48, type: 3}
 --- !u!82 &3763226934407475886
 AudioSource:
   m_ObjectHideFlags: 0
@@ -260,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 2620b8b5953adef40997fca3e0c8a1cc, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 4635f10f6eddc4f489bbb2eeb3a63c69, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -314,3 +315,23 @@ MonoBehaviour:
   m_DefaultActionMap: Snake
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!95 &7564430674692114016
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353289742696323698}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

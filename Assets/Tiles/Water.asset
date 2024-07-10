@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DungeonWalls32 (Override)
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -1600717239, guid: 4387dc13e87f6394f914e8dfa243b684, type: 3}
-  m_DefaultGameObject: {fileID: 1218746961641722008, guid: 0fbc9ff9347cdc04d9831fe3712dd212, type: 3}
+  m_DefaultGameObject: {fileID: 3244996407788536348, guid: 89131d3a0a9ddf046ae2d3ac5e817ab6, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0
@@ -1025,5 +1025,7 @@ MonoBehaviour:
     m_OverrideSprite: {fileID: -1739295205, guid: 4387dc13e87f6394f914e8dfa243b684, type: 3}
   - m_OriginalSprite: {fileID: -1563497612, guid: 6e5c0274bdd8edb44935805a971e572b, type: 3}
     m_OverrideSprite: {fileID: 1496687366, guid: 4387dc13e87f6394f914e8dfa243b684, type: 3}
-  m_GameObjects: []
+  m_GameObjects:
+  - m_OriginalGameObject: {fileID: 1218746961641722008, guid: d081411cbdd1857458063e8943574854, type: 3}
+    m_OverrideGameObject: {fileID: 3244996407788536348, guid: 89131d3a0a9ddf046ae2d3ac5e817ab6, type: 3}
   m_InstanceTile: {fileID: -6790885635418135243}

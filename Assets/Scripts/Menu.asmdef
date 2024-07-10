@@ -1,11 +1,8 @@
 {
-    "name": "Snake",
-    "rootNamespace": "SnakeGame",
+    "name": "Menu",
+    "rootNamespace": "Menu",
     "references": [
-        "GUID:bd24bc51ee69b834ea6386501365bd88",
-        "GUID:dab5d9c11ab619f4d8b86e948a7ee6d4",
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:98420192cccf5f047a48c5bef2051e5e"
+        "GUID:bd24bc51ee69b834ea6386501365bd88"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

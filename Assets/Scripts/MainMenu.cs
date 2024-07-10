@@ -1,37 +1,41 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using AudioUtilities;
 
-public class MainMenu : MonoBehaviour
-{
-    public void PlaySnake()
+namespace Menu{
+    public class MainMenu : MonoBehaviour
     {
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.Play();
-        StartCoroutine(_PlayGame(audio.clip.length, 1));
-    }
-    
-    public void Demo()
-    {
-        SceneManager.LoadScene(1);
-    }
+        public AudioData audioData;
+        public void PlaySnake()
+        {
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.Play();
+            StartCoroutine(PlayGame(audio.clip.length, 1));
+        }
+        
+        public void Demo()
+        {
+            SceneManager.LoadScene(1);
+        }
 
-    public void Quit()
-    {
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.Play();
-        StartCoroutine(_QuitGame(audio.clip.length));
-    }
+        public void Quit()
+        {
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.Play();
+            StartCoroutine(QuitGame(audio.clip.length));
+        }
 
-    private IEnumerator _PlayGame(float timeToWait, int sceneID)
-    {
-        yield return new WaitForSeconds(timeToWait);
-        SceneManager.LoadScene(sceneID);
+        private IEnumerator PlayGame(float timeToWait, int sceneID)
+        {
+            yield return new WaitForSeconds(timeToWait);
+            SceneManager.LoadScene(sceneID);
+        }
+        
+        private IEnumerator QuitGame(float timeToWait)
+        {
+            yield return new WaitForSeconds(timeToWait);
+            Application.Quit();
+        } 
     }
-    
-    private IEnumerator _QuitGame(float timeToWait)
-    {
-        yield return new WaitForSeconds(timeToWait);
-        Application.Quit();
-    } 
 }

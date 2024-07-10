@@ -9,8 +9,14 @@ namespace AudioUtilities{
     [CreateAssetMenu]
     public class AudioData : ScriptableObject, ICollection<AudioClip>
     {
-        [SerializeField] private AudioClip[] sounds;
-
+        [SerializeField] private AudioReference[] sounds;
+        public AudioClip defaultAudioClip = null;
+        [System.Serializable]
+        public class AudioReference
+        {
+            public string name;
+            public AudioClip audioClip;
+        }
         public int Count => sounds.Length;
 
         public bool IsReadOnly => true;
@@ -31,7 +37,21 @@ namespace AudioUtilities{
 
         public bool Contains(AudioClip item)
         {
-            return sounds.Contains(item);
+            foreach (var soundData in sounds)
+            {
+                if (soundData.audioClip.Equals(item)) return true;
+            }
+            return false;   
+        }
+
+        public bool Contains(string key)
+        {
+            foreach (var item in sounds)
+            {
+                if (key == item.name) return true;
+            }
+            getDefault();    
+            return false;          
         }
 
         public void CopyTo(AudioClip[] array, int arrayIndex)
@@ -40,17 +60,38 @@ namespace AudioUtilities{
         }
 
         public AudioClip getClip(string name){
-            AudioClip clip = null;
-            for (int i = 0; clip == null && i < sounds.Length; i++)
+            foreach (var item in sounds)
             {
-                if(sounds[i].name == name)clip = sounds[i];  
-            }        
-            return clip;
+                if (name == item.name) return item.audioClip;
+            }
+            return getDefault();              
+        }
+
+        private AudioClip getDefault(){
+            Debug.LogWarning(message: $"Audio clip not found for {name}");
+            return defaultAudioClip;    
         }
 
         public IEnumerator<AudioClip> GetEnumerator()
         {
-            return (IEnumerator<AudioClip>)sounds.GetEnumerator();        
+            List<AudioClip> list = new();
+
+            foreach (var item in sounds)
+            {
+                list.Add(item.audioClip);
+            }
+            return list.GetEnumerator();
+        }
+
+        public IEnumerator<string> GetKeysEnumerator()
+        {
+            List<string> list = new();
+
+            foreach (var item in sounds)
+            {
+                list.Add(item.name);
+            }
+            return list.GetEnumerator();
         }
 
         public bool Remove(AudioClip item)

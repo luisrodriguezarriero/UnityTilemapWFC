@@ -57,21 +57,21 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -16
-  far clip plane: 2
+  near clip plane: -1
+  far clip plane: 1
   field of view: 26.65758
   orthographic: 1
-  orthographic size: 32
-  m_Depth: 0
+  orthographic size: 8
+  m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 2147483647
-  m_RenderingPath: 1
+  m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 0

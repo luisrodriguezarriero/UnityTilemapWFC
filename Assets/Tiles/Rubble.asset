@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rubble
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -1265323831, guid: e5669b6ed854e784bb390193aa69916d, type: 3}
-  m_DefaultGameObject: {fileID: 0}
+  m_DefaultGameObject: {fileID: 448584528678518681, guid: 69692b1d91e8c5f4ebb919e9071a6071, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules:
   - m_Id: 0

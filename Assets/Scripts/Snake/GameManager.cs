@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
-using WFC.Tilemap;
-using UnityEditor;
 using AudioUtilities;
+using Snake.Setup;
+using System;
+using Snake.UI;
 
 namespace Snake
 {
@@ -14,9 +15,13 @@ namespace Snake
         readonly int xSize = 19, ySize = 14;
         public GameObject playerPrefab;
         public GameObject foodPrefab;
-        public WFC.Tilemap.Overlap.TilemapGenerator mapGenerator;
+        public MapGenerator mapGenerator;
         private GameObject player;
         private List<GameObject> foodList; 
+
+        [Header("UI GameObjects Reference")]
+        public Controller PauseMenuController;
+        public Controller GameOverMenuController;
         private readonly Random seed = new Random();
         private void Awake() => Setup();
         public void GameOver()
@@ -46,45 +51,55 @@ namespace Snake
         public void Setup()
         {
             gameStateManager = GameStateManager.GetInstance();
+            
+            gameStateManager.PauseUI     = PauseMenuController;
+            gameStateManager.GameOverUI  = GameOverMenuController;
+
             gameStateManager.Setup();
 
             GenerateMap();
 
-            int level = GetPunctuation();
+            int level = GetLevel();
             var nFoods = seed.Next(level +1, level + 4);
 
-            var setup = SnakeSetup.Instance;
-            setup.Seed = seed;
+            var levelFactoryInstance = LevelFactory.Instance;
+            levelFactoryInstance.Seed = seed;
 
-            bool[][] grid = setup.GetWalkableLocations(mapGenerator.outputGrid);
+            bool[][] grid = levelFactoryInstance.GetWalkableLocations((UnityEngine.Tilemaps.Tilemap)mapGenerator.getOutput());
 
-            var placeableZones = new ZonesDelimiter(grid).Zone;
+            var placeableZones = new Setup.ZonesDelimiter(grid).Zone;
             
-            List<Vector2> locations = setup.GetNPlaceableLocations(placeableZones, nFoods + 1);
+            List<Vector2> locations = levelFactoryInstance.GetNPlaceableLocations(placeableZones, nFoods + 1);
 
             var playerLocation = locations.Pop();
             
-            player = setup.PlacePrefab(playerLocation, playerPrefab, setup.SnakeParent);
-            foodList = setup.MassPlacePrefab(locations.ToArray(), foodPrefab, setup.FoodParent);
+            player = levelFactoryInstance.PlacePrefab(playerLocation, playerPrefab, levelFactoryInstance.SnakeParent);
+            foodList = levelFactoryInstance.MassPlacePrefab(locations.ToArray(), foodPrefab, levelFactoryInstance.FoodParent);
 
             player.gameObject.SetActive(true);
             gameStateManager.Resume();
         }
 
-        private int GetPunctuation()
+        private int GetLevel()
         {
-            throw new System.NotImplementedException();
+            return GameStateManager.GetInstance().level;
         }
 
 #if UNITY_EDITOR
         public void TestSetup(){
-            DestroyFoodAndPlayer();
+            if(mapGenerator.modelExists)
+                DestroyFoodAndPlayer();
+            else mapGenerator.CreateMap();
             Setup();
         }
 
         void DestroyFoodAndPlayer(){
             DestroyImmediate(player);
-            foreach(GameObject food in foodList) DestroyImmediate(food);
+            if(foodList != null)
+            {            
+                foreach(GameObject food in foodList) DestroyImmediate(food);
+                foodList=new List<GameObject>();
+            }
         }
 
 #endif
@@ -97,8 +112,9 @@ namespace Snake
             mapGenerator.Solve();
         }
 
-        private void NextLevel()
+        private void Victory()
         {
+            GameStateManager.GetInstance().Victory();
             Destroy();
             Setup();
         }
@@ -107,28 +123,8 @@ namespace Snake
         {
             foodList.Remove(food.gameObject);
             Destroy(food.gameObject);
-            if (foodList.Count == 0) NextLevel();
+            if (foodList.Count == 0) Victory();
         }
         
     }
-
-#if  UNITY_EDITOR
-
-    [CustomEditor(typeof(GameManager))]
-
-    public class GameInspector : UnityEditor.Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            DrawDefaultInspector();
-
-            GameManager myScript = (GameManager)target;
-            if (GUILayout.Button("Setup"))
-                {
-                    myScript.TestSetup();
-                }
-        }
-    }
-
-#endif
 }
