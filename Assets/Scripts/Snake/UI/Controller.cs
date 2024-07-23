@@ -18,8 +18,6 @@ namespace Snake.UI
         void OnEnable()
         {
             Time.timeScale = 0f;
-
-            SoundManager.Instance.Play(clips.getClip(audioElements[0]));
         }
 
         void Quit()

@@ -6,36 +6,16 @@ using AudioUtilities;
 namespace Menu{
     public class MainMenu : MonoBehaviour
     {
-        public AudioData audioData;
+        [SerializeField] protected AudioData audioData;  
         public void PlaySnake()
         {
-            AudioSource audio = GetComponent<AudioSource>();
-            audio.Play();
-            StartCoroutine(PlayGame(audio.clip.length, 1));
-        }
-        
-        public void Demo()
-        {
+            audioData.Play("Play");
             SceneManager.LoadScene(1);
         }
-
         public void Quit()
         {
-            AudioSource audio = GetComponent<AudioSource>();
-            audio.Play();
-            StartCoroutine(QuitGame(audio.clip.length));
-        }
-
-        private IEnumerator PlayGame(float timeToWait, int sceneID)
-        {
-            yield return new WaitForSeconds(timeToWait);
-            SceneManager.LoadScene(sceneID);
-        }
-        
-        private IEnumerator QuitGame(float timeToWait)
-        {
-            yield return new WaitForSeconds(timeToWait);
+            audioData.Play("Quit");
             Application.Quit();
-        } 
+        }
     }
 }

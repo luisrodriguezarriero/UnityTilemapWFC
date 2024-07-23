@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1921ef6428e721d439271d440ad4046e, type: 3}
   m_Name: Snake Sounds
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: 
+    audioClip: {fileID: 0}
+  - name: 
+    audioClip: {fileID: 0}
+  defaultAudioClip: {fileID: 0}

@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1929df89bd785240875241fb079cfda, type: 3}
+  m_Script: {fileID: 0}
   m_Name: Ground
-  m_EditorClassIdentifier: ProjectAssembly::PeriodicTile
-  m_Sprite: {fileID: 1194475754, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
+  m_EditorClassIdentifier: TilemapUtilities::PeriodicTile
+  m_Sprite: {fileID: -782425462, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -31,24 +31,24 @@ MonoBehaviour:
     e31: 0
     e32: 0
     e33: 1
-  m_InstancedGameObject: {fileID: 448584528678518681, guid: 4d9ea48a593d4f9498a7c94a210be3fb, type: 3}
+  m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
-  m_ColliderType: 0
+  m_ColliderType: 1
   _sources:
-  - {fileID: 1194475754, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: 1991619226, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: -1017221151, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: 495293505, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: 1793523436, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: 1659207791, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: -624337514, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: 1016453633, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: -1065281853, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: -550485530, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: 604064633, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: -1383835643, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: -290822531, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: 2011936679, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: 1983426378, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
-  - {fileID: -204840306, guid: 31fef0b97bf18ae43808097b3b8ef5bb, type: 3}
+  - {fileID: -782425462, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: -179430131, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: 664518358, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: 274218680, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: -1099661669, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: 1702815246, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: 808932113, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: 2063807096, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: -1316656388, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: -1994256758, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: -1103019296, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: 1880606734, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: 618013521, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: 1174920377, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: 180221759, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
+  - {fileID: 1773469673, guid: 8a3ea6722aab6a341a21364fef3d3d13, type: 3}
   xPeriod: 4

@@ -12,9 +12,6 @@ namespace Snake.Setup
         [Range(1, 8)]
         public int symmetry = 1;
         [Tooltip("This should be true if you dont know what you're doing, or the image is relatively small")]
-        public bool rotate;
-        public bool mirrorX;
-        public bool mirrorY;
         public bool periodicInput = true;
         [Tooltip("This will not be taken into account in many cases")]
         public bool ground = false;

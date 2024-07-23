@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static Snake.Utilities;
+using static Snake.Utils;
 
 namespace Snake.Setup
 {

@@ -107,6 +107,13 @@ namespace AudioUtilities{
         private AudioClip soundError(string name){
             Debug.LogError($"Sound {name} does not exist"); 
             return null;
-        }    
+        }
+
+        public void Play(string name)
+        {
+            var clip = getClip(name);
+
+            if(clip!=null) SoundManager.Instance.Play(clip);
+        }      
     }
 }

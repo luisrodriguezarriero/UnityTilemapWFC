@@ -16,6 +16,7 @@ namespace Snake.Setup
             TilemapGenerator myScript = (TilemapGenerator)target;
             if (myScript.inputGrid)
             {
+                timeTestUtils.Testing=true;
                 if(myScript.modelExists){
                     if (GUILayout.Button("Solve from model"))
                     {
@@ -27,8 +28,8 @@ namespace Snake.Setup
                     }
                 }
                 else
-                
                 if (GUILayout.Button("CreateModel"))
+
                 {
                     myScript.CreateModel();
                 }

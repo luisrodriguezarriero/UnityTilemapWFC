@@ -86,7 +86,6 @@ namespace WFC.Tilemap.Overlap
 
         public override void Save(UnityEngine.Tilemaps.Tilemap output, int[] observed, int mx, int my)
         {
-            output.gameObject.tag = "Wall";
             if (observed[0] >= 0)
             {
                 for (var y = 0; y < my; y++)
