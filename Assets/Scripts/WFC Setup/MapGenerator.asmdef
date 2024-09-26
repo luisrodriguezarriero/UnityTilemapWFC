@@ -1,0 +1,16 @@
+{
+    "name": "MapGenerator",
+    "rootNamespace": "WFC.Setup",
+    "references": [
+        "GUID:98420192cccf5f047a48c5bef2051e5e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
